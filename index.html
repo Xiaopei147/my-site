@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" href="images/clouds.jpg" type="image/x-icon"/>
+    <title>极致云盘</title>
+        <meta name="keywords" content="极致云盘是一款支持离线下载的免费网盘,是和百度云,微云同一类型的免费网盘,提供免费网络存储空间服务。使用极致云盘您可以免费自由存储、共享、不限速下载各类文件,文件安全加密,永久存储。管">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/bb8b2f436dba4e66a5245f5a78061c96.css" rel="stylesheet">
+    <link href="css/material-design-iconic-font.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/modernizr.js"></script>
+  </head>
+  <body data-spy="scroll" data-target=".header" data-offset="80">
+ <!-- <p>  ----------《那个远方》----------</p> -->
+ <style>
+  .audio-player {
+    position: relative;
+    width: 400px; /* 自定义播放器的宽度 */
+    height: 40px; /* 自定义播放器的高度 */
+    background-color: #f1f1f1; /* 自定义播放器的背景颜色 */
+    border-radius: 5px; /* 自定义播放器的圆角 */
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+
+  .audio-player audio {
+    width: 100%;
+    height: 100%;
+    outline: none;
+  }
+
+  .audio-controls {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+  }
+
+  .audio-controls button {
+    margin-left: 5px;
+    cursor: pointer;
+  }
+
+  .custom-dialog {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    text-align: center;
+    font-size: 18px;
+    animation: dialogFadeIn 0.3s;
+  }
+
+  @keyframes dialogFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .custom-dialog button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #fff;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    margin: 0 10px;
+    cursor: pointer;
+  }
+
+  .custom-dialog button:hover {
+    background-color: #f5f5f5;
+  }
+</style>
+
+<div class="audio-player">
+  <audio id="myAudio" src="" controls></audio>
+  <div class="audio-controls">
+    <button id="previousButton"><<</button>
+    <button id="">切</button>
+    <button id="nextButton">>></button>
+    <iframe scrolling="no" src="https://tianqiapi.com/api.php?style=ye&skin=longan" frameborder="0" width="300" height="55" allowtransparency="true"></iframe>
+  </div>
+</div>
+
+
+<script>
+  var songs = [
+    {
+      title: "淋雨一直走",
+      source: "http://music.163.com/song/media/outer/url?id=25640392.mp3"
+    },
+    {
+      title: "bye bye bye",
+      source: "http://music.163.com/song/media/outer/url?id=4164331.mp3"
+    },
+    {
+      title: "曾经的你",
+      source: "http://music.163.com/song/media/outer/url?id=1960404075.mp3"
+    },
+    {
+      title: "平凡的日子里的挣扎",
+      source: "http://music.163.com/song/media/outer/url?id=2007069352.mp3"
+    },
+    {
+      title: "凭什么",
+      source: "images/凭什么.mp3"
+    },
+    {
+      title: "飘向北方",
+     <!-- source: "images/飘向北方.mp3" -->
+      source: "http://music.163.com/song/media/outer/url?id=1308818967.mp3"
+    }
+    // 可以继续添加更多歌曲
+  ];
+
+  var currentIndex = 0;
+  var audio = document.getElementById('myAudio');
+
+  function playMusic() {
+    audio.src = songs[currentIndex].source;
+    audio.play();
+  }
+
+  function playNextSong() {
+    currentIndex = (currentIndex + 1) % songs.length;
+    playMusic();
+  }
+
+  function playPreviousSong() {
+    currentIndex = (currentIndex - 1 + songs.length) % songs.length;
+    playMusic();
+  }
+
+  audio.addEventListener('ended', function() {
+    playNextSong();
+  });
+
+  var dialog = document.createElement('div');
+  dialog.className = 'custom-dialog';
+  dialog.innerHTML = '<p>是否播放背景音乐？</p><button id="playButton">播放</button><button id="skipButton">跳过</button>';
+  document.body.appendChild(dialog);
+
+  var playButton = document.getElementById('playButton');
+  var skipButton = document.getElementById('skipButton');
+  var previousButton = document.getElementById('previousButton');
+  var nextButton = document.getElementById('nextButton');
+
+  playButton.addEventListener('click', function() {
+    playMusic();
+    dialog.remove();
+  });
+
+  skipButton.addEventListener('click', function() {
+    dialog.remove();
+    audio.removeAttribute('autoplay');
+  });
+
+  previousButton.addEventListener('click', function() {
+    playPreviousSong();
+  });
+
+  nextButton.addEventListener('click', function() {
+    playNextSong();
+  });
+</script>
+
+
+
+
+    <div id="ip-container" class="ip-container">
+      <header class="ip-header">
+        <div class="ip-loader">
+          <svg width="80px" height="80px" viewbox="0 0 80 80" class="ip-inner">
+            <path d="M40,10C57.351,10,71,23.649,71,40.5S57.351,71,40.5,71 S10,57.351,10,40.5S23.649,10,40.5,10z" class="ip-loader-circlebg"/>
+            <path id="ip-loader-circle" d="M40,10C57.351,10,71,23.649,71,40.5S57.351,71,40.5,71 S10,57.351,10,40.5S23.649,10,40.5,10z" class="ip-loader-circle"/>
+          </svg>
+        </div>
+      </header>
+      <div class="ip-main">
+        <!-- Mobile nav -->
+        <div id="cbp-spmenu" class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right">
+          <div class="mobile_nav_close_button"><a id="hideRight" href><span class="close_icon zmdi zmdi-arrow-right"></span></a></div>
+        <nav id="mobile_menu_content" class="navbar-nav-mobile">
+  <a href="/index.html#hero" style="color: #CCCC33;">首页</a>
+  <a href="/index.html#start" style="color: #CCFFFF;">关于我们</a>
+  <a href="/index.html#faq" style="color: #FF99CC;">常见问题</a>
+  <a href="/index.html#thanks" style="color: #9999FF;">支持我们</a>
+  <a href="/index.html#TOS" style="color: #99CCCC;">公告声明</a>
+  <a href="http://admin.openshuai.top/" target="_blank">管理中心</a>
+ <!-- <marquee><span style="font-weight: bolder; font-size: 20px; color: red;">以下是一些小彩蛋！ 以下是一些小彩蛋！</span></marquee> -->
+  <marquee>
+  <span style="font-weight: bolder; font-size: 15px; animation: rainbow 3s infinite;">
+    以下是一些小彩蛋！ 以下是一些小彩蛋！
+  </span>
+</marquee>
+
+<style>
+  @keyframes rainbow {
+    0% { color: red; }
+    14% { color: orange; }
+    28% { color: yellow; }
+    42% { color: green; }
+    57% { color: blue; }
+    71% { color: indigo; }
+    85% { color: violet; }
+    100% { color: red; }
+  }
+</style>
+
+  <a href="https://chatai.openshuai.top/" style="color: #FFA500;">ChatGPT-3.5</a>
+  <a href="http://bingai.openshuai.top/" style="color: #17f00f;">必应AI聊天</a>
+  <a href="http://day.openshuai.top/">漂流瓶❤️</a>
+  <a href="http://lyb.openshuai.top/">留言板</a>
+  <a href="http://admin.openshuai.top/">我的后台</a>
+  <a href="http://www.openshuai.top/time">新年倒计时</a>
+  <a href="https://weixin.hngscloud.com/">河南高速云监控</a>
+</nav>
+
+        </div>
+        <header id="header" class="header navbar navbar-light animated">
+          <div class="container"><a href="/index.html" class="navbar-brand"> <span class="logo">极致</span><span class="brand-txt">云盘</span></a>
+            <div class="navbar">
+              <ul class="nav navbar-nav pull-right">
+                <li class="nav-item"><a href="http://www.openshuai.top">首页</a></li>
+                <li class="nav-item"><a href="https://chatai.openshuai.top/" style="color: #FFA500;">ChatGPT-3.5</a></li>
+                <li class="nav-item"><a href="http://bingai.openshuai.top/" style="color: #0ef147;">必应AI聊天</a></li>
+                <li class="nav-item"><a href="http://day.openshuai.top/">漂流瓶❤️</a></li>
+           <!-- <li class="nav-item"><a href="http://www.openshuai.top:3000">进入聊天室一起跨年</a></li> -->
+                <li class="nav-item"><a href="http://admin.openshuai.top/">我的后台</a></li>
+                <li class="nav-item"><a href="http://www.openshuai.top/time">新年倒计时</a></li>
+                <li class="nav-item"><a href="https://weixin.hngscloud.com/">河南高速云监控</a></li>
+              </ul>
+              <div class="pull-right togger-container"><span id="showRight" class="zmdi zmdi-menu navbar-toggler"></span></div>
+            </div>
+          </div>
+        </header>
+        <div class="main-content">
+          <div id="hero" class="hero">
+            <div class="hero-inner"> 
+              <div class="container">
+                <h1>云存储，传输快</h1>
+                <div class="col-lg-6 col-lg-offset-3">
+                  <br>
+                  <p>您还在为用户抱怨下载慢发愁吗<br>来这里，免费直链，畅快淋漓尽致<br>极致云盘<br><br>不只是<a style='color:red'>快</a>喔<br>还有<a style='color:#FF9999'>安全</a></p>
+                <a href="http://www.openshuai.top/stop/" target="_blank" class="btn btn-primary btn-cta btn-lg btn-raised ui-wave nav-item"><span class="zmdi zmdi-cloud-outline-alt"> 目前暂停注册</span></a>
+                                  <a href="https://www.aliyundrive.com/sign/in?spm=aliyundrive.index.0.0.2d836020LVvp4y" target="_blank" class="btn btn-success btn-cta btn-lg btn-raised ui-wave nav-item"><span class="zmdi zmdi-assignment"> 登陆</span></a>               
+ </div>
+              </div>
+            </div>
+          </div>
+          <div id="start" class="features">
+            <header>
+              <h2 class="section-heading-underline">关于我们</h2>
+              <p align="center">极致云盘致力为用户打造数据云存储,云分发服务<br> 让您的资源、软件、应用、APP等各种文件，随时随地触手可及，更好的分享。</p>
+            </header>
+            <div class="container">
+              <div class="row">
+<!--                        <a href="" target="_blank">-->
+                <div class="feature-item col-md-4 text-center wow fadeInUp">
+                  <div class="icon-container"><span class="zmdi zmdi-cloud-outline-alt"></span></div>
+                  <h3>5T云存储</h3>
+                  <div class="desc">
+                    <p>拥有大到极致，可扩展的存储空间，支持个性化定制。</p>
+                  </div>
+                </div>
+                                
+<!--                            <a href="" target="_blank">-->
+                <div data-wow-delay="0.3s" class="feature-item col-md-4 text-center wow fadeInUp">
+                  <div class="icon-container"><span class="zmdi zmdi-cloud-outline-alt"></span></div>
+                  <h3>云加速</h3>
+                  <div class="desc">
+                    <p>真正的云加速下载，对下载不做任何限制。</p>
+                  </div>
+                </div>
+                                
+<!--                            <a href="" target="_blank">-->
+                <div data-wow-delay="0.6s" class="feature-item col-md-4 text-center wow fadeInUp">
+                  <div class="icon-container"><span class="zmdi zmdi-cloud-outline-alt"></span></div>
+                  <h3>体验佳</h3>
+                  <div class="desc">
+                    <p>直链下载，不干扰用户，节省用户时间。</p>
+                  </div>
+                </div>
+                                
+              </div>
+
+              </div>
+              </div>
+            </div>
+          </div>
+          <div class="action-call text-center"><span>遇到问题，或需要其他帮助？</span><a href="http://lyb.openshuai.top/" target="_blank" class="btn btn-default btn-cta btn-lg btn-raised ui-wave">给我留言<span class="zmdi zmdi-chevron-right"></span></a></div>
+          <div id="faq" class="faq">
+            <div class="container">
+              <header>
+                <h2 class="section-heading-underline">常见问题</h2>
+              </header>
+              <ul class="faq-list">
+                <li class="wow fadeInLeft">
+                  <h4 class="faq-q">为什么选择极致云盘</h4>
+                  <p class="faq-a">整合各种资源为你所用，为你24小时不间断增加收入。帮你解决各种问题，节省你的时间，等于让你赚更多的钱。我们对于任何大小客户同等待遇</p>
+                </li>
+                <li class="wow fadeInRight">
+                  <h4 class="faq-q">极致云盘 功能</h4>
+                  <p class="faq-a">文件地址永久有效，不必担心过期而经常更换链接，帮您节省繁琐步骤，把时间用到有价值的地方去。</p>
+                </li>
+                <li data-wow-delay="0.15s" class="wow fadeInLeft">
+                  <h4 class="faq-q">体验真正的云加速</h4>
+                  <p class="faq-a">下载无任何限制，无验证码等影响用户体验限制。在极致云盘，所有云存储、文件下载都是秒级响应。</p>
+                </li>
+                <li data-wow-delay="0.15s" class="wow fadeInRight">
+                  <h4 class="faq-q">极致云盘稳定性如何</h4>
+                  <p class="faq-a">采用云计算+存储分发技术。任何网络都可以享受最快的下载速度。</p>
+                </li>
+
+              </ul>
+            </div>
+          </div>
+          <div id="thanks" data-stellar-background-ratio="0.6" class="newsletter">
+            <h2>Support us(支持我们)</h2><br>
+            </div>
+          <div id="TOS" class="contact">
+            <div class="container">
+              <div class="row">
+                <div class="container">
+                  <h3 class="section-heading-underline">公告声明</h3>
+                  <div class="contact-info-container wow fadeInLeft">
+                    <p class="lead">用户组到期后如需继续使用外链，请及时续费(到期后外链文件将失效)！</p>                                                                    
+                    <p class="lead">新注册用户(用户组:注册会员)，无外链权限，可通过升级用户组获取权限！</p>                  
+                    <p class="lead">禁止上传任何违规文件及侵权影视等作品，违者恕不通知，立即封号!</p>
+      
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer class="footer text-center"><span>© Copyright <span id="copyright"></span> | 极致云盘 </span> <br>
+        <a href="http://beian.miit.gov.cn/" target="_blank"> 豫ICP备2021035165号</a> </footer>
+    
+    
+    <!-- Scripts-->
+    <script src="js/app.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+  </body>
+
+</html>
+

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>每日一句</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            color: #007bff;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 60%;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            text-align: left;
+            padding: 10px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #f9f9f9;
+            transition: background-color 0.3s ease;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        p {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <h1>每日一句</h1>
+    <table>
+        <tr>
+            <th>每日一句</th>
+            <th>来源</th>
+            <th>作者</th>
+        </tr>
+        <tr id="hitokotoRow">
+            <td id="hitokotoCell"></td>
+            <td id="fromCell"></td>
+            <td id="fromWhoCell"></td>
+        </tr>
+    </table>
+    <button id="refreshButton">刷新</button>
+    <p>提示：为保证数据准确性，3秒内只能请求一组数据，请勿频繁刷新。</p>
+
+    <script>
+        // 从后端获取数据
+        function fetchData() {
+            fetch('https://international.v1.hitokoto.cn/')  // 替换成你的后端服务地址
+                .then(response => response.json())
+                .then(data => {
+                    // 将数据填充到页面中
+                    document.getElementById('hitokotoCell').innerText = data.hitokoto;
+                    document.getElementById('fromCell').innerText = data.from;
+                    document.getElementById('fromWhoCell').innerText = data.from_who || '匿名';
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // 初始化页面时获取数据
+        fetchData();
+
+        // 刷新按钮点击事件
+        document.getElementById('refreshButton').addEventListener('click', function() {
+            fetchData();
+        });
+    </script>
+</body>
+</html>
+

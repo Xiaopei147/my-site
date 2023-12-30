@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>漂流瓶 - 属于年轻人的世界</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #73B3B1, #3E8381); /* 使用渐变背景色 */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh; /* 让内容占满整个视口高度 */
+            padding-bottom: 50px; /* 确保在手机端上提示信息不被按钮挡住 */
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5); /* 添加文本阴影效果 */
+            background: linear-gradient(to right, #73B3B1, #3E8381); /* 使用渐变背景色 */
+            -webkit-background-clip: text;
+            color: transparent; /* 使文字透明，以显示渐变背景色 */
+        }
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+            background-color: #F5E0E0; /* 海洋白 */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            border: 1px solid #73B3B1; /* 海洋蓝 */
+            text-align: left;
+            padding: 15px;
+        }
+        th {
+            background-color: #73B3B1; /* 海洋蓝 */
+            color: #F5E0E0; /* 海洋白 */
+        }
+        tr:hover {
+            background-color: #D9E4E3; /* 海洋浅蓝 */
+            transition: background-color 0.3s ease;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            background-color: #73B3B1; /* 海洋蓝 */
+            color: #F5E0E0; /* 海洋白 */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        button:hover {
+            background-color: #3E8381; /* 海洋深蓝 */
+        }
+        p {
+            position: absolute; /* 绝对定位 */
+            bottom: 10px;
+            width: 100%;
+            font-size: 1rem;
+            color: #F5E0E0; /* 海洋白 */
+            text-align: center;
+        }
+
+        @media (max-width: 768px) { /* 响应式设计，针对小屏幕设备进行调整 */
+            table {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>漂流瓶 - 探索未知的海洋</h1>
+    <table>
+        <tr>
+            <th>漂流瓶内容</th>
+            <th>投放位置</th>
+            <th>投放者</th>
+        </tr>
+        <tr id="messageRow">
+            <td id="messageCell"></td>
+            <td id="locationCell"></td>
+            <td id="throwerCell"></td>
+        </tr>
+    </table>
+    <button id="refreshButton">捞取漂流瓶</button>
+    <p>提示：为保护海洋环境，请勿投放不当信息。</p>
+
+    <script>
+        function fetchData() {
+            fetch('https://international.v1.hitokoto.cn/')  // 替换成你的代理地址
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('messageCell').innerText = data.hitokoto;
+                    document.getElementById('locationCell').innerText = data.from;
+                    document.getElementById('throwerCell').innerText = data.from_who || '匿名';
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        fetchData();
+
+        document.getElementById('refreshButton').addEventListener('click', function() {
+            fetchData();
+        });
+    </script>
+</body>
+</html>
+
