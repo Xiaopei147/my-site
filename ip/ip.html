@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP地址归属地查询</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 16px;
+            color: #555;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        p {
+            font-size: 16px;
+            color: #333;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body onload="loadDefaultIP()">
+    <h1>IP地址归属地查询</h1>
+    <label for="ipAddress">请输入IP地址：</label>
+    <input type="text" id="ipAddress" placeholder="例如：8.8.8.8">
+    <button onclick="queryIP()">查询</button>
+    <p id="result"></p>
+
+    <script>
+        function loadDefaultIP() {
+            // 获取用户的IP地址
+            var defaultIP = "";
+
+            // 通过第三方服务获取用户的IP地址，这里使用ipinfo.io
+            var ipInfoApiUrl = "https://ipinfo.io/json";
+
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    defaultIP = response.ip;
+
+                    // 将获取到的IP地址显示在输入框中
+                    document.getElementById("ipAddress").value = defaultIP;
+
+                    // 查询默认IP地址的归属地
+                    queryIP();
+                }
+            };
+
+            xhr.open("GET", ipInfoApiUrl, true);
+            xhr.send();
+        }
+
+        function queryIP() {
+            var ipAddress = document.getElementById("ipAddress").value;
+            var apiUrl = "http://ip-api.com/json/" + ipAddress;
+
+            // 使用XMLHttpRequest发送GET请求
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    displayResult(response);
+                }
+            };
+
+            xhr.open("GET", apiUrl, true);
+            xhr.send();
+        }
+
+        function displayResult(result) {
+            var resultElement = document.getElementById("result");
+
+            if (result.status === "success") {
+                var html = "<strong>IP地址：</strong> " + result.query + "<br>";
+                html += "<strong>国家：</strong> " + result.country + "<br>";
+                html += "<strong>地区：</strong> " + result.regionName + "<br>";
+                html += "<strong>城市：</strong> " + result.city + "<br>";
+                html += "<strong>运营商：</strong> " + result.isp + "<br>";
+                resultElement.innerHTML = html;
+            } else {
+                resultElement.innerHTML = "查询失败，请输入有效的IP地址。";
+            }
+        }
+    </script>
+</body>
+</html>
