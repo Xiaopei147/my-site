@@ -66,7 +66,7 @@
     <script>
         function loadDefaultIP() {
             var defaultIP = "";
-            var ipInfoApiUrl = "/json/default"; // 使用相对路径
+            var ipInfoApiUrl = "https://ipinfo.io/json";
 
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
@@ -84,7 +84,7 @@
 
         function queryIP() {
             var ipAddress = document.getElementById("ipAddress").value;
-            var apiUrl = "/json/" + ipAddress; // 使用相对路径
+            var apiUrl = "https://ipinfo.io/" + ipAddress + "/json";
 
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
@@ -103,7 +103,7 @@
 
             if (result.ip) {
                 var html = "<strong>IP地址：</strong> " + result.ip + "<br>";
-                html += "<strong>国家：</strong> " + result.country_name + "<br>";
+                html += "<strong>国家：</strong> " + result.country + "<br>";
                 html += "<strong>地区：</strong> " + result.region + "<br>";
                 html += "<strong>城市：</strong> " + result.city + "<br>";
                 html += "<strong>运营商：</strong> " + result.org + "<br>";
