@@ -65,10 +65,7 @@
 
     <script>
         function loadDefaultIP() {
-            // 获取用户的IP地址
             var defaultIP = "";
-
-            // 通过第三方服务获取用户的IP地址，这里使用ipinfo.io
             var ipInfoApiUrl = "https://ipinfo.io/json";
 
             var xhr = new XMLHttpRequest();
@@ -76,11 +73,7 @@
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     var response = JSON.parse(xhr.responseText);
                     defaultIP = response.ip;
-
-                    // 将获取到的IP地址显示在输入框中
                     document.getElementById("ipAddress").value = defaultIP;
-
-                    // 查询默认IP地址的归属地
                     queryIP();
                 }
             };
@@ -91,9 +84,8 @@
 
         function queryIP() {
             var ipAddress = document.getElementById("ipAddress").value;
-            var apiUrl = "http://ip-api.com/json/" + ipAddress;
+            var apiUrl = "https://ipapi.co/json/" + ipAddress;
 
-            // 使用XMLHttpRequest发送GET请求
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
@@ -109,12 +101,12 @@
         function displayResult(result) {
             var resultElement = document.getElementById("result");
 
-            if (result.status === "success") {
-                var html = "<strong>IP地址：</strong> " + result.query + "<br>";
-                html += "<strong>国家：</strong> " + result.country + "<br>";
-                html += "<strong>地区：</strong> " + result.regionName + "<br>";
+            if (result.ip) {
+                var html = "<strong>IP地址：</strong> " + result.ip + "<br>";
+                html += "<strong>国家：</strong> " + result.country_name + "<br>";
+                html += "<strong>地区：</strong> " + result.region + "<br>";
                 html += "<strong>城市：</strong> " + result.city + "<br>";
-                html += "<strong>运营商：</strong> " + result.isp + "<br>";
+                html += "<strong>运营商：</strong> " + result.org + "<br>";
                 resultElement.innerHTML = html;
             } else {
                 resultElement.innerHTML = "查询失败，请输入有效的IP地址。";
