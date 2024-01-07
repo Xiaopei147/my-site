@@ -66,7 +66,7 @@
     <script>
         function loadDefaultIP() {
             var defaultIP = "";
-            var ipInfoApiUrl = "https://ipinfo.io/json";
+            var ipInfoApiUrl = "/json/default"; // 使用相对路径
 
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
@@ -84,7 +84,7 @@
 
         function queryIP() {
             var ipAddress = document.getElementById("ipAddress").value;
-            var apiUrl = "https://ipapi.co/json/" + ipAddress;
+            var apiUrl = "/json/" + ipAddress; // 使用相对路径
 
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
